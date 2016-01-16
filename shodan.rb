@@ -11,8 +11,9 @@ class ShodanAPI
   attr_accessor :api
 
   # Initialize API via API Key
+  # Enter your API Key for variable @api_key
   def initialize
-    @api_key = 'bnjjf87YSnQGrO4IagIrClllc8LJcWqt'
+    @api_key = ' '
     @api = Shodan::Shodan.new(api_key)
     @url = "http://www.shodanhq.com/api/"
   end
