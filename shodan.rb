@@ -13,16 +13,9 @@ class ShodanAPI
   # Initialize API via API Key
   # Enter your API Key for variable @api_key
   def initialize
-    @api_key = ' '
+    @api_key = ''
     @api = Shodan::Shodan.new(api_key)
     @url = "http://www.shodanhq.com/api/"
-  end
-
-  def connect
-    url = @url + 'info?key='
-    begin
-      c = Curl::Easy.perform(url)
-    end
   end
 
   # Display API information
@@ -45,6 +38,32 @@ class ShodanAPI
     end
   end
 
+  def host(ip)
+    url = @url + 'host?ip=' + ip + '&key=' + @api_key
+    begin
+      c = Curl::Easy.perform(url)
+      results = JSON.parse(c.body_str)
+      return results
+    rescue => e
+      puts "Problem running Host Search" + "!"
+      puts "\t=> #{e}"
+      return nil
+    end
+  end
+
+  def count(string)
+    url = @url + 'count?q=' + string + '&key=' + @api_key
+    begin
+      c = Curl::Easy.perform(url)
+      results = JSON.parse(c.body_str)
+      return results['total']
+    rescue => e
+      puts "Problem grabbing results count" + "!"
+      puts "\t=> #{e}"
+      return nil
+    end
+  end
+
   def api_call
     ip = '104.236.19.250'
     host = api.host(ip)
@@ -53,5 +72,6 @@ class ShodanAPI
 end
 
 ShodanAPI.new.info
-# ShodanAPI.new.api_call
+ShodanAPI.new.api_call
+
 
