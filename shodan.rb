@@ -65,7 +65,7 @@ class ShodanAPI
   end
 
   def api_call
-    ip = '104.236.19.250'
+    ip = '192.81.213.48'
     host = api.host(ip)
     puts host.to_s
   end
