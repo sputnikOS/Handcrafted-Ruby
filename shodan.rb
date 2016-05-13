@@ -20,7 +20,7 @@ class ShodanAPI
 
     @url = 'http://www.shodanhq.com/api/'
     @host = '216.58.194.142'
-    @key =  'bnjjf87YSnQGrO4IagIrClllc8LJcWqt'
+    @key =  ''
     # @api = Shodan::Shodan.new(api_key)
   end
 
@@ -50,7 +50,7 @@ class ShodanAPI
     begin
       c = Curl::Easy.perform(url)
       results = JSON.parse(c.body_str)
-      return results['matches']
+      puts results['longitude']
     rescue => e
       puts "Problem running Host Search" + "!"
       puts "\t=> #{e}"
@@ -113,6 +113,6 @@ class ShodanAPI
   # end
 end
 
-ShodanAPI.new.search(string)
+ShodanAPI.new.host
 
 
