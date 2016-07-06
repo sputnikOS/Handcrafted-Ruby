@@ -1,26 +1,48 @@
+#   def fib(n)
+#     return 1 if n <= 2
+#
+#     fib_index = 3
+#     a, b = 1, 1
+#
+#     while fib_index <= n
+#       c = a + b
+#       a = b
+#       b = c
+#       fib_index += 1
+#     end
+#     c
+#   end
+#
+# p (0..10).map {|i| fib(i)}
+# p (0..10).inject {|sum, i| sum + fib(i)}
+#
+# # Alternate Method Using Recursion
+#   def fibonacci(n)
+#     return  n  if n <= 1
+#     fibonacci(n - 1) + fibonacci(n - 2)
+#   end
+#
+# p ( 0..10 ).map {|i| fibonacci(i)}
+# p ( 0..10 ).inject {|sum, i| sum + fibonacci(i)}
+
   def fib(n)
-    return 1 if n <= 2
+    a = 0
+    b = 1
 
-    fib_index = 3
-    a, b = 1, 1
-
-    while fib_index <= n
-      c = a + b
+    n.times do
+      temp = a
       a = b
-      b = c
-      fib_index += 1
+      b = temp + b
     end
-    c
+
+    return a
   end
 
-p (1..10).map {|i| fib(i)}
-p (1..10).inject {|sum, i| sum + fib(i)}
+    10.times do |n|
+      result = fib(n)
+      p result
+    end
 
-# Alternate Method Using Recursion
-  def fibonacci(n)
-    return  n  if n <= 1
-    fibonacci(n - 1) + fibonacci(n - 2)
-  end
+  p (0..10).inject { |sum, n| sum + fib(n)}
 
-p ( 1..10 ).map {|i| fibonacci(i)}
-p ( 1..10 ).inject {|sum, i| sum + fibonacci(i)}
+
