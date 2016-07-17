@@ -21,9 +21,10 @@
 #     return  n  if n <= 1
 #     fibonacci(n - 1) + fibonacci(n - 2)
 #   end
-#
+
 # p ( 0..10 ).map {|i| fibonacci(i)}
 # p ( 0..10 ).inject {|sum, i| sum + fibonacci(i)}
+
 
   def fib(n)
     a = 0
@@ -37,12 +38,12 @@
 
     return a
   end
-
-    10.times do |n|
-      result = fib(n)
-      p result
-    end
-
-  p (0..10).inject { |sum, n| sum + fib(n)}
+  
+puts "Total: %i" %
+         ((1..10).inject(0) do |t,i|
+           f = fib(i)
+           puts "%s: %s" % [i.to_s.rjust(2), f.to_s.rjust(3)]
+           t + f
+         end)
 
 
