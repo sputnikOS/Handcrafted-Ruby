@@ -3,11 +3,17 @@ require 'curb'
 
 
 api_key = ''
+base_url = 'https://api.shodan.io/'
 
 # Gets and displays api key information
-def info(api_key)
-  url = "https://api.shodan.io/api-info?key=#{api_key}"
+def info(api_key, base_url)
+  api_info = 'api-info?key='
+  ip_info = 'tools/myip?key='
+  url = base_url + api_info + api_key
+  userIP = base_url + ip_info + api_key
   begin
+    a = Curl::Easy.perform(userIP)
+    puts "User IP Address is #{a.body_str}"
     c = Curl::Easy.perform(url)
     results = JSON.parse(c.body_str)
     puts "Shodan API Key Confirmed" + "!"
@@ -21,7 +27,8 @@ def info(api_key)
 end
 
 def search(api_key)
-  puts "Enter search input"
+  puts "=================="
+  puts "Enter search input:"
   input = gets.chomp
   api = Shodan::Shodan.new(api_key)
   puts "Searching results for #{input}"
@@ -37,6 +44,6 @@ def search(api_key)
   }
 end
 
-info(api_key)
+info(api_key, base_url)
 search(api_key)
 
