@@ -53,7 +53,7 @@ base_url = 'https://api.shodan.io/'
         puts host['ip_str']
         puts host['port']
         puts host['transport']
-        # puts host['data']
+        puts host['data']
         puts "===================== \n"
       }
     end
