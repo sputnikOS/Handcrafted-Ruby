@@ -1,13 +1,17 @@
 require 'optparse'
 require 'httparty'
 require 'colorize'
+require 'socket'
+require 'timeout'
 
 HOME=File.expand_path(File.dirname(__FILE__))
 RESULTS = HOME + '/results/'
 
-api_key = ' '
+# enter api key below
+api_key = '' 
 base_url = 'https://api.shodan.io/'
 
+class Shodan
   def banner
     if RUBY_PLATFORM =~ /win32|win64|\.NET|windows|cygwin|mingw32/i
       system('cls')
@@ -40,7 +44,9 @@ base_url = 'https://api.shodan.io/'
 
   # Performs a search based on user input
   def search(api_key, base_url)
-    query = base_url + 'shodan/host/search?key=' + api_key + '&query='
+    search = 'shodan/host/search?'
+    search_query = '&query='
+    query = base_url + search + api_key + search_query
     puts "=================== \nEnter search input:".colorize(:white)
     input = gets.chomp
     begin
@@ -48,18 +54,37 @@ base_url = 'https://api.shodan.io/'
       puts "Searching results for #{input}"
       results = JSON.parse(search.body)
       results['matches'].each{ |host|
-        puts host['org']
-        puts host['hostnames']
-        puts host['ip_str']
-        puts host['port']
-        puts host['transport']
-        puts host['data']
+        org = host['org']
+        hostname = "Host" + ": #{host['hostnames']}"
+        ip = "IP" + ": #{host['ip_str']}"
+        port = "Port" + ": #{host['port']}"
+        protocol = "Protocol" + ": #{host['transport']}"
+        data = "Data" + ": #{host['data']}"
+        begin
+          Timeout.timeout(5) do
+            begin
+              s = TCPSocket.new(host['ip_str'], host['port'])
+              s.close
+              puts "Port is open!"
+            rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+              puts "Port is closed!"
+            end
+          end
+        rescue Timeout::Error
+        end
+        puts org
+        puts hostname
+        puts ip
+        puts port
+        puts protocol
+        puts data
         puts "===================== \n"
       }
     end
   end
+end
 
-banner
+Shodan.new.banner
 # info(api_key, base_url)
-search(api_key, base_url)
+Shodan.new.search(api_key, base_url)
 
