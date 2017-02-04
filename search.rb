@@ -7,9 +7,9 @@ require 'timeout'
 HOME=File.expand_path(File.dirname(__FILE__))
 RESULTS = HOME + '/results/'
 
-# enter api key below
-api_key = '' 
+api_key = ''
 base_url = 'https://api.shodan.io/'
+exploit_url = 'https://exploits.shodan.io/api/search?query='
 
 class Shodan
   def banner
@@ -23,7 +23,7 @@ class Shodan
 
   # Gets and displays api key information
   def info(api_key, base_url)
-    api_url = 'api-info?key='
+    api_url = 'api-info?'
     ip_url = 'tools/myip?key='
     url = base_url + api_url + api_key
     userIP = base_url + ip_url + api_key
@@ -82,9 +82,30 @@ class Shodan
       }
     end
   end
+
+  def exploit(api_key, exploit_url)
+    puts "=================== \nEnter search input:".colorize(:white)
+    input = gets.chomp
+    query = exploit_url + input + '&' + api_key
+    begin
+      search = HTTParty.get(query)
+      puts "Retrieving results for #{input} ..."
+      results = JSON.parse(search.body)
+      results['matches'].each { |exploit|
+        source = "Source".colorize(:yellow) + ": #{exploit['source']}"
+        id = "ID".colorize(:yellow) + ": #{exploit['_id']}"
+        description = "Description".colorize(:yellow) + ": #{exploit['description']}"
+        puts source
+        puts id
+        puts description
+        puts "===================== \n".colorize(:yellow)
+      }
+    end
+  end
 end
 
 Shodan.new.banner
-# info(api_key, base_url)
+Shodan.new.info(api_key, base_url)
 Shodan.new.search(api_key, base_url)
+Shodan.new.exploit(api_key, exploit_url)
 
