@@ -95,9 +95,20 @@ class Shodan
         source = "Source".colorize(:yellow) + ": #{exploit['source']}"
         id = "ID".colorize(:yellow) + ": #{exploit['_id']}"
         description = "Description".colorize(:yellow) + ": #{exploit['description']}"
+        type = "Type".colorize(:yellow) + ": #{exploit['type']}"
+        rank = "Rank".colorize(:yellow) + ": #{exploit['rank']}"
+        code = "Code".colorize(:yellow) + ": #{exploit['code']}"
+        cve = "CVE".colorize(:yellow) + ": #{exploit['cve']}"
+        author = "Author".colorize(:yellow) + ": #{exploit['author']}"
+
         puts source
+        puts type
+        puts cve
+        puts rank
+        puts author
         puts id
         puts description
+        puts code
         puts "===================== \n".colorize(:yellow)
       }
     end
@@ -105,7 +116,7 @@ class Shodan
 end
 
 Shodan.new.banner
-Shodan.new.info(api_key, base_url)
-Shodan.new.search(api_key, base_url)
+# Shodan.new.info(api_key, base_url)
+# Shodan.new.search(api_key, base_url)
 Shodan.new.exploit(api_key, exploit_url)
 

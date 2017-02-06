@@ -1,5 +1,5 @@
 # The two following methods calculate the first ten integers in the Fibonacci sequence,
-# and then prints the sum of all of the integers. 
+# and then prints the sum of all of the integers.
 
 # Using Recursion
   def fibonacci(n)
