@@ -9,7 +9,7 @@ require 'pry'
 HOME=File.expand_path(File.dirname(__FILE__))
 RESULTS = HOME + '/results/'
 
-api_key = 'bnjjf87YSnQGrO4IagIrClllc8LJcWqt'
+api_key = ''
 base_url = 'https://api.shodan.io/'
 exploit_url = 'https://exploits.shodan.io/api/search?query='
 
