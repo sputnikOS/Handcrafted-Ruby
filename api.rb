@@ -21,7 +21,6 @@ RESULTS = HOME + '/results/'
 def banner
   puts
   puts "Shodan API Search Assistant".light_green
-  puts "By".light_green + ": Hood3dRob1n".white
 end
 
 # Clear Terminal

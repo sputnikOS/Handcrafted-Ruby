@@ -9,7 +9,7 @@ require 'pry'
 HOME=File.expand_path(File.dirname(__FILE__))
 RESULTS = HOME + '/results/'
 
-api_key = ''
+api_key = 'bnjjf87YSnQGrO4IagIrClllc8LJcWqt'
 base_url = 'https://api.shodan.io/'
 exploit_url = 'https://exploits.shodan.io/api/search?query='
 
@@ -47,7 +47,7 @@ class Shodan
   def search(api_key, base_url)
     search = 'shodan/host/search?'
     search_query = '&query='
-    query = base_url + search + api_key + search_query
+    query = base_url + search + 'key=' + api_key + search_query
     puts "=================== \nEnter search input:".colorize(:white)
     input = gets.chomp
     begin
@@ -119,7 +119,7 @@ class Shodan
   def scan(base_url, api_key)
     puts "=================== \nEnter IP address:".colorize(:white)
     input = gets.chomp
-    query = base_url + 'shodan/host/' + input + '?' + api_key
+    query = base_url + 'shodan/host/' + input + '?key=' + api_key
     begin
       scan = HTTParty.get(query)
       puts "Scanning #{input} ..."
@@ -144,8 +144,21 @@ class Shodan
   end
 end
 
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: shogun.rb [COMMAND]"
+  opt.separator  ""
+  opt.separator  "Commands"
+  opt.separator  "     info: display API information"
+  opt.separator  "     search: search by keyword"
+  opt.separator  "     exploit: search exploits"
+  opt.separator  "     scan: scan by IP address"
+  opt.separator  ""
+  opt.separator  "Options"
+end
 banner
-# Shodan.new.info(api_key, base_url)
+Shodan.new.info(api_key, base_url)
 # Shodan.new.search(api_key, base_url)
 # Shodan.new.exploit(api_key, exploit_url)
-Shodan.new.scan(base_url, api_key)
+# Shodan.new.scan(base_url, api_key)
