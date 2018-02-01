@@ -4,6 +4,7 @@ require 'colorize'
 require 'socket'
 require 'timeout'
 require 'nokogiri'
+require 'pry'
 
 HOME=File.expand_path(File.dirname(__FILE__))
 RESULTS = HOME + '/results/'
