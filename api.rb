@@ -1,6 +1,6 @@
 
 
-APIKEY='bnjjf87YSnQGrO4IagIrClllc8LJcWqt'
+APIKEY=''
 
 ##### STD GEMS #######
 require 'fileutils'  #
